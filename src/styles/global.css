@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens taken from Figma (file "Centro ginecologico presentacion").
+ * Each token generates Tailwind utilities: bg-primary, text-fg-2, border-stroke, text-title-1, ...
+ */
+@theme {
+  /* Brand */
+  --color-primary: #00506c;
+  --color-primary-hover: #003f56;
+  --color-primary-dark: #00425d;
+  --color-primary-soft: #216c8a;
+  --color-primary-tint: #e4f2f6;
+  --color-primary-wash: #f8fbfc;
+  --color-primary-line: #b3d5e5;
+  --color-primary-deep: #095e7b;
+  --color-gold: #ad8246;
+  --color-gold-muted: #7a6a4b;
+  --color-ink: #173841;
+
+  /* Neutrals */
+  --color-fg-1: #000000;
+  --color-fg-2: #21242d;
+  --color-fg-3: #343842;
+  --color-fg-4: #535761;
+  --color-stroke: #e6e8ed;
+  --color-stroke-strong: #c7ccd8;
+  --color-neutral-6: #d3d7e0;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f1f3f6;
+  --color-surface-subtle: #f9fafb;
+  --color-surface-strong: #eceef1;
+
+  /* Section backgrounds and decorations */
+  --color-blush: #fedada;
+  --color-sky: #6aa9c8;
+
+  /* Typography */
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+
+  --text-title-1: 2.5rem;
+  --text-title-1--line-height: 2.875rem;
+  --text-title-2: 1.75rem;
+  --text-title-2--line-height: 1.875rem;
+  --text-subtitle-1: 1.25rem;
+  --text-subtitle-1--line-height: 1.625rem;
+  --text-body-2: 1.125rem;
+  --text-body-2--line-height: 1.625rem;
+  --text-body-1: 1rem;
+  --text-body-1--line-height: 1.375rem;
+  --text-caption-1: 0.875rem;
+  --text-caption-1--line-height: 1.125rem;
+  --text-action: 1rem;
+  --text-action--line-height: 1.625rem;
+  --text-action-sm: 0.875rem;
+  --text-action-sm--line-height: 1.125rem;
+
+  /* Layout: Figma content width is 1360px inside a 1600px frame */
+  --container-content: 85rem;
+}
+
+/*
+ * Scroll-reveal (see src/lib/reveal.ts). Only hides content when JS is running (html.js)
+ * and the visitor has not asked for reduced motion, so nothing ever stays invisible.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal],
+  .js [data-reveal-items] > * {
+    opacity: 0;
+    transform: translateY(1.5rem);
+    transition:
+      opacity 0.7s ease-out,
+      transform 0.7s ease-out;
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .js [data-reveal='left'] {
+    transform: translateX(-2rem);
+  }
+  .js [data-reveal='right'] {
+    transform: translateX(2rem);
+  }
+  .js [data-reveal='fade'] {
+    transform: none;
+  }
+  .js [data-reveal='zoom'] {
+    transform: scale(0.94);
+  }
+  .js [data-reveal].is-revealed,
+  .js [data-reveal-items] > .is-revealed {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-surface font-sans text-fg-2 antialiased;
+  }
+
+  /* The page behind an open modal (components/ui/Dialog.astro) must not scroll. */
+  html:has(dialog[open]) {
+    overflow: hidden;
+  }
+
+  /* Tailwind v4 no longer gives buttons a pointer cursor; restore it for every clickable button. */
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+}
