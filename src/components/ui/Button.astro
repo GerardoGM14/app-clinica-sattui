@@ -1,0 +1,69 @@
+---
+import Icon from './Icon.astro';
+import type { IconName } from './icons';
+
+type Variant = 'primary' | 'outline' | 'ghost' | 'neutral' | 'gold' | 'outline-light';
+type Size = 'sm' | 'md';
+
+interface Props {
+  href?: string;
+  variant?: Variant;
+  size?: Size;
+  type?: 'button' | 'submit' | 'reset';
+  iconLeft?: IconName;
+  iconRight?: IconName;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  type = 'button',
+  iconLeft,
+  iconRight,
+  class: className,
+  ...attrs
+} = Astro.props;
+
+const variants: Record<Variant, string> = {
+  primary: 'bg-primary text-white hover:bg-primary-hover',
+  outline: 'border border-primary text-primary hover:bg-primary hover:text-white',
+  ghost: 'text-fg-3 hover:bg-primary/5 hover:text-primary',
+  neutral: 'bg-neutral-6 text-fg-3 hover:bg-stroke-strong',
+  // For dark backgrounds
+  gold: 'bg-gold text-white hover:brightness-110',
+  'outline-light': 'border border-white text-white hover:bg-white hover:text-primary',
+};
+
+const sizes: Record<Size, { button: string; icon: number }> = {
+  sm: { button: 'h-10 gap-2 px-5 text-action-sm', icon: 18 },
+  md: { button: 'h-12 gap-3 px-6 text-action', icon: 20 },
+};
+
+const classes = [
+  'inline-flex items-center justify-center whitespace-nowrap rounded-full font-medium transition-colors',
+  'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
+  variants[variant],
+  sizes[size].button,
+  className,
+];
+const iconSize = sizes[size].icon;
+---
+
+{
+  href ? (
+    <a href={href} class:list={classes} {...attrs}>
+      {iconLeft && <Icon name={iconLeft} size={iconSize} />}
+      <slot />
+      {iconRight && <Icon name={iconRight} size={iconSize} />}
+    </a>
+  ) : (
+    <button type={type} class:list={classes} {...attrs}>
+      {iconLeft && <Icon name={iconLeft} size={iconSize} />}
+      <slot />
+      {iconRight && <Icon name={iconRight} size={iconSize} />}
+    </button>
+  )
+}
