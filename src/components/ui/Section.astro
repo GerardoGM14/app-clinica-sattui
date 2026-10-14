@@ -1,0 +1,20 @@
+---
+import Container from './Container.astro';
+
+interface Props {
+  id: string;
+  /** "none" lets full-height artwork touch the section edges; add padding inside instead. */
+  spacing?: 'default' | 'none';
+  class?: string;
+}
+
+const { id, spacing = 'default', class: className } = Astro.props;
+---
+
+<!-- Every one-page section uses this wrapper so the nav anchors and spacing stay consistent.
+     scroll-mt matches the sticky header height. -->
+<section id={id} class:list={['scroll-mt-20 xl:scroll-mt-32', spacing === 'default' && 'py-16 md:py-20', className]}>
+  <Container>
+    <slot />
+  </Container>
+</section>

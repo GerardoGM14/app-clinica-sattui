@@ -1,0 +1,36 @@
+---
+interface Props {
+  title: string;
+  /** Part of the title shown in gold. Must appear verbatim inside `title`. */
+  highlight?: string;
+  /** Starts the highlighted part on its own line (from sm up). */
+  breakBeforeHighlight?: boolean;
+  subtitle?: string;
+  align?: 'center' | 'left';
+  /** Scroll-reveal animation. Turn off when a parent already animates in. */
+  reveal?: boolean;
+  class?: string;
+}
+
+const {
+  title,
+  highlight,
+  breakBeforeHighlight = false,
+  subtitle,
+  align = 'center',
+  reveal = true,
+  class: className,
+} = Astro.props;
+
+const [before, after] = highlight ? title.split(highlight) : [title, ''];
+---
+
+<div
+  class:list={['flex flex-col gap-4 md:gap-5', align === 'center' ? 'items-center text-center' : 'items-start', className]}
+  data-reveal={reveal ? '' : undefined}
+>
+  <h2 class="text-2xl leading-tight font-semibold text-fg-1 md:text-title-2">
+    {before}{breakBeforeHighlight && <br class="max-sm:hidden" />}{highlight && <span class="text-gold">{highlight}</span>}{after}
+  </h2>
+  {subtitle && <p class="max-w-[750px] text-body-1 text-fg-3">{subtitle}</p>}
+</div>
