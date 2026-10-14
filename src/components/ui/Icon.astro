@@ -1,0 +1,16 @@
+---
+import { icons, type IconName } from './icons';
+
+interface Props {
+  name: IconName;
+  size?: number;
+  class?: string;
+}
+
+const { name, size = 20, class: className } = Astro.props;
+
+// Icons use fill="currentColor", so their color follows the parent's text color.
+const svg = icons[name].replace('<svg ', `<svg width="${size}" height="${size}" aria-hidden="true" `);
+---
+
+<span class:list={['inline-flex shrink-0', className]} set:html={svg} />
