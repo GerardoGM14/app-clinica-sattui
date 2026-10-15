@@ -1,0 +1,32 @@
+---
+import { site, images } from '@data/site';
+
+type Size = 'sm' | 'lg';
+
+interface Props {
+  size?: Size;
+  href?: string;
+  class?: string;
+}
+
+const { size = 'sm', href = '#inicio', class: className } = Astro.props;
+
+const sizes: Record<Size, { mark: string; title: string; subtitle: string; gap: string }> = {
+  sm: { mark: 'h-[45px] w-[43px]', title: 'text-[19px]', subtitle: 'text-xs tracking-[0.03em]', gap: 'gap-1.5' },
+  lg: {
+    mark: 'h-[60px] w-[58px] sm:h-[88px] sm:w-[86px]',
+    title: 'text-[26px] sm:text-[38px]',
+    subtitle: 'text-base tracking-[0.03em] sm:text-2xl',
+    gap: 'gap-2 sm:gap-2.5',
+  },
+};
+const s = sizes[size];
+---
+
+<a href={href} class:list={['inline-flex items-center', s.gap, className]} aria-label={site.name}>
+  <img src={images.logoMark} alt="" class:list={['shrink-0', s.mark]} />
+  <span class="flex flex-col gap-1.5 leading-none">
+    <span class:list={['font-semibold text-ink', s.title]}>{site.name}</span>
+    <span class:list={['text-gold-muted', s.subtitle]}>{site.tagline}</span>
+  </span>
+</a>

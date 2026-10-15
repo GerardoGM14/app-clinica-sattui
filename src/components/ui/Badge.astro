@@ -1,0 +1,20 @@
+---
+type Variant = 'outline' | 'on-dark' | 'neutral';
+
+interface Props {
+  variant?: Variant;
+  class?: string;
+}
+
+const { variant = 'outline', class: className } = Astro.props;
+
+const variants: Record<Variant, string> = {
+  outline: 'h-6 rounded border border-primary-line bg-primary-wash px-1.5 text-caption-1 font-medium text-primary-deep',
+  'on-dark': 'h-8 gap-2.5 rounded-full bg-white/15 px-3 text-caption-1 font-medium text-white',
+  neutral: 'min-h-8 rounded-lg border border-stroke bg-surface-muted px-2 text-body-1 font-medium text-fg-3',
+};
+---
+
+<span class:list={['inline-flex items-center gap-1.5 whitespace-nowrap', variants[variant], className]}>
+  <slot />
+</span>
