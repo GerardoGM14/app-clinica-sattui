@@ -1,0 +1,49 @@
+---
+import { Image } from 'astro:assets';
+import { getPhoto } from '@lib/images';
+
+interface Props {
+  /** Path inside src/assets/images, e.g. "services/endometriosis.png". */
+  src: string;
+  /** Empty string for decorative images. */
+  alt: string;
+  /** Widths to generate for the srcset. Omit to keep the file's own size. */
+  widths?: number[];
+  /** How wide the image is shown at each breakpoint, so the browser picks the right file. */
+  sizes?: string;
+  /** Use "eager" only for the first image on screen (the Hero). */
+  loading?: 'lazy' | 'eager';
+  /** WebP quality (1–100). Raise it for large, prominent photos. */
+  quality?: number;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { src, alt, widths, sizes, loading = 'lazy', quality = 80, class: className, ...attrs } = Astro.props;
+
+const image = getPhoto(src);
+if (!image) console.warn(`[Photo] Missing image: src/assets/images/${src}`);
+
+// Never request widths larger than the original file.
+const usableWidths = image && widths ? widths.filter((w) => w <= image.width) : undefined;
+---
+
+{
+  image ? (
+    <Image
+      src={image}
+      alt={alt}
+      widths={usableWidths?.length ? usableWidths : undefined}
+      sizes={usableWidths?.length ? sizes : undefined}
+      format="webp"
+      quality={quality}
+      loading={loading}
+      fetchpriority={loading === 'eager' ? 'high' : undefined}
+      class={className}
+      {...attrs}
+    />
+  ) : (
+    // Keeps the layout intact while the file is missing.
+    <div class:list={['bg-black/5', className]} role={alt ? 'img' : undefined} aria-label={alt || undefined} {...attrs} />
+  )
+}
