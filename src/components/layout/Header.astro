@@ -1,0 +1,68 @@
+---
+import Container from '@components/ui/Container.astro';
+import Logo from '@components/ui/Logo.astro';
+import Button from '@components/ui/Button.astro';
+import Icon from '@components/ui/Icon.astro';
+import { navLinks, whatsappLink } from '@data/site';
+---
+
+<header class="sticky top-0 z-50 bg-surface">
+  <div class="border-b border-stroke">
+    <Container class="flex items-center justify-between py-3">
+      <Logo size="sm" />
+
+      <div class="flex items-center gap-2">
+        <Button href={whatsappLink()} size="sm" iconLeft="calendar-blank" class="max-sm:hidden" target="_blank" rel="noopener">
+          Agendar consulta
+        </Button>
+        <button
+          type="button"
+          class="group inline-flex size-10 items-center justify-center rounded-full text-primary hover:bg-primary/5 xl:hidden"
+          aria-label="Abrir menú"
+          aria-controls="main-nav"
+          aria-expanded="false"
+          data-menu-toggle
+        >
+          <span class="group-aria-expanded:hidden"><Icon name="list" size={24} /></span>
+          <span class="hidden group-aria-expanded:block"><Icon name="x" size={24} /></span>
+        </button>
+      </div>
+    </Container>
+  </div>
+
+  <nav id="main-nav" aria-label="Principal" class="border-b border-stroke max-xl:hidden" data-menu>
+    <Container>
+      <ul class="flex justify-between max-xl:flex-col max-xl:py-2">
+        {
+          navLinks.map((link) => (
+            <li>
+              <Button href={link.href} variant="ghost" class="max-xl:w-full max-xl:justify-start" data-menu-link>
+                {link.label}
+              </Button>
+            </li>
+          ))
+        }
+        <li class="sm:hidden">
+          <Button href={whatsappLink()} iconLeft="calendar-blank" class="my-2 w-full" target="_blank" rel="noopener">
+            Agendar consulta
+          </Button>
+        </li>
+      </ul>
+    </Container>
+  </nav>
+</header>
+
+<script>
+  // Mobile menu: toggles the nav below xl (the full row needs ~1120px) and closes it after choosing a section.
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.querySelector<HTMLElement>('[data-menu]');
+
+  const setOpen = (open: boolean) => {
+    toggle?.setAttribute('aria-expanded', String(open));
+    toggle?.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    menu?.classList.toggle('max-xl:hidden', !open);
+  };
+
+  toggle?.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+  menu?.querySelectorAll('[data-menu-link]').forEach((link) => link.addEventListener('click', () => setOpen(false)));
+</script>
