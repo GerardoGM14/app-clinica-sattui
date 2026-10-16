@@ -1,0 +1,88 @@
+---
+import IconButton from './IconButton.astro';
+
+interface Props {
+  /** Accessible name, e.g. "Motivos de consulta". */
+  label: string;
+  class?: string;
+}
+
+const { label, class: className } = Astro.props;
+---
+
+<!--
+  Generic carousel: pass the cards as children. Native scroll-snap handles swipe;
+  the script below wires the arrows and dots. Controls hide when every card fits.
+  Cards per view: 1 (mobile, with a peek of the next one), 2 (sm), 3 (md), 4 (lg).
+  The cards appear one by one the first time the carousel scrolls into view (src/lib/reveal.ts).
+-->
+<div class:list={['flex flex-col items-center gap-6', className]} role="region" aria-roledescription="carrusel" aria-label={label} data-carousel>
+  <div class="flex w-full items-center gap-6">
+    <IconButton icon="caret-left" label="Anterior" class="max-md:hidden" data-carousel-prev />
+
+    <ul
+      class="-mb-6 flex min-w-0 flex-1 snap-x snap-mandatory gap-4 overflow-x-auto pb-6 [scrollbar-width:none] *:shrink-0 *:snap-start *:basis-[85%] sm:*:basis-[calc((100%-1rem)/2)] md:*:basis-[calc((100%-2rem)/3)] lg:*:basis-[calc((100%-3rem)/4)] [&::-webkit-scrollbar]:hidden"
+      data-carousel-track
+      data-reveal-stagger
+      data-reveal-items
+    >
+      <slot />
+    </ul>
+
+    <IconButton icon="caret-right" label="Siguiente" class="max-md:hidden" data-carousel-next />
+  </div>
+
+  <div class="flex gap-3" data-carousel-dots></div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((carousel) => {
+    const track = carousel.querySelector<HTMLElement>('[data-carousel-track]')!;
+    const prev = carousel.querySelector<HTMLButtonElement>('[data-carousel-prev]')!;
+    const next = carousel.querySelector<HTMLButtonElement>('[data-carousel-next]')!;
+    const dots = carousel.querySelector<HTMLElement>('[data-carousel-dots]')!;
+
+    // A page is one viewport of cards. The last page can be partial (e.g. 5 cards, 4 per view),
+    // so it is pinned to the maximum scroll position instead of a multiple of the page width.
+    const gap = () => parseFloat(getComputedStyle(track).columnGap) || 0;
+    const pageWidth = () => track.clientWidth + gap();
+    const maxScroll = () => track.scrollWidth - track.clientWidth;
+    const pageCount = () => (maxScroll() <= 1 ? 1 : Math.ceil((maxScroll() - 1) / pageWidth()) + 1);
+    const currentPage = () =>
+      track.scrollLeft >= maxScroll() - 1 ? pageCount() - 1 : Math.round(track.scrollLeft / pageWidth());
+    const goTo = (page: number) =>
+      track.scrollTo({ left: Math.min(Math.max(page, 0) * pageWidth(), maxScroll()), behavior: 'smooth' });
+
+    const renderDots = () => {
+      const count = pageCount();
+      const hasPages = count > 1;
+      [prev, next, dots].forEach((el) => el.classList.toggle('invisible', !hasPages));
+
+      dots.replaceChildren(
+        ...Array.from({ length: hasPages ? count : 0 }, (_, i) => {
+          const dot = document.createElement('button');
+          dot.type = 'button';
+          dot.className = 'size-4 rounded-full bg-neutral-6 transition-colors aria-current:bg-gold';
+          dot.ariaLabel = `Ir a la página ${i + 1}`;
+          dot.addEventListener('click', () => goTo(i));
+          return dot;
+        }),
+      );
+      update();
+    };
+
+    const update = () => {
+      const page = currentPage();
+      const last = pageCount() - 1;
+      prev.disabled = page <= 0;
+      next.disabled = page >= last;
+      Array.from(dots.children).forEach((dot) => dot.removeAttribute('aria-current'));
+      dots.children[page]?.setAttribute('aria-current', 'true');
+    };
+
+    prev.addEventListener('click', () => goTo(currentPage() - 1));
+    next.addEventListener('click', () => goTo(currentPage() + 1));
+    track.addEventListener('scroll', update, { passive: true });
+    new ResizeObserver(renderDots).observe(track);
+  });
+</script>
