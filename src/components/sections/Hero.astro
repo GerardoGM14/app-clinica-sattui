@@ -1,0 +1,64 @@
+---
+import Container from '@components/ui/Container.astro';
+import Button from '@components/ui/Button.astro';
+import Icon from '@components/ui/Icon.astro';
+import IconLabel from '@components/ui/IconLabel.astro';
+import Photo from '@components/ui/Photo.astro';
+import { hero } from '@data/hero';
+---
+
+<section id="inicio" class="relative isolate flex flex-col overflow-hidden bg-blush lg:block lg:min-h-[548px]">
+  <!-- The photo is the full section background (the pink fade is part of the image).
+       On mobile it becomes a band below the copy, centered on the patient. -->
+  <div class="relative order-last -z-20 h-72 sm:h-96 lg:absolute lg:inset-0 lg:h-auto" data-reveal="fade">
+    <Photo
+      src={hero.image.src}
+      alt={hero.image.alt}
+      loading="eager"
+      widths={[800, 1200, 1600, 2400, 3200]}
+      sizes="100vw"
+      quality={90}
+      class="size-full object-cover object-[78%_center] lg:object-right"
+    />
+    <div class="absolute inset-0 bg-linear-to-b from-blush via-transparent to-transparent lg:hidden"></div>
+  </div>
+
+  <img
+    src={hero.decoration}
+    alt=""
+    aria-hidden="true"
+    class="pointer-events-none absolute top-0 -left-8 -z-10 h-[349px] w-[256px] max-lg:hidden"
+  />
+
+  <Container class="relative flex flex-col gap-8 py-10 lg:flex-row lg:items-start lg:justify-between lg:py-[60px] lg:pl-10">
+    <div class="flex max-w-[504px] flex-col gap-8 lg:min-h-[428px] lg:justify-center" data-reveal="left">
+      <div class="flex flex-col gap-4">
+        <p class="flex items-center gap-2.5 text-body-1 font-medium text-primary-soft">
+          <Icon name="video-camera" size={20} />
+          {hero.eyebrow}
+        </p>
+        <h1 class="text-[2rem] leading-tight font-semibold text-fg-1 sm:text-title-1">{hero.title}</h1>
+        <p class="text-body-2 text-fg-2">{hero.description}</p>
+      </div>
+
+      <div class="flex flex-wrap gap-3">
+        <Button href={hero.primaryCta.href} iconLeft="calendar-blank" target="_blank" rel="noopener">
+          {hero.primaryCta.label}
+        </Button>
+        <Button href={hero.secondaryCta.href} variant="outline" iconRight="arrow-up-right">
+          {hero.secondaryCta.label}
+        </Button>
+      </div>
+    </div>
+
+    <ul class="flex gap-5 max-lg:flex-wrap lg:flex-col" data-reveal-stagger>
+      {
+        hero.highlights.map((item) => (
+          <li data-reveal="right">
+            <IconLabel icon={item.icon} label={item.label} />
+          </li>
+        ))
+      }
+    </ul>
+  </Container>
+</section>
