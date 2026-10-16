@@ -1,0 +1,29 @@
+---
+import Section from '@components/ui/Section.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+import Carousel from '@components/ui/Carousel.astro';
+import ConcernCard from '@components/cards/ConcernCard.astro';
+import { concernsSection, concerns } from '@data/concerns';
+import { whatsappLink } from '@data/site';
+---
+
+<Section id="motivos-de-consulta">
+  <div class="flex flex-col gap-12">
+    <SectionHeading {...concernsSection} />
+
+    <Carousel label="Motivos de consulta">
+      {
+        concerns.map((concern) => (
+          <li>
+            <ConcernCard
+              title={concern.title}
+              description={concern.description}
+              image={concern.image}
+              ctaHref={whatsappLink(`Hola, quisiera agendar una consulta sobre: ${concern.title}.`)}
+            />
+          </li>
+        ))
+      }
+    </Carousel>
+  </div>
+</Section>

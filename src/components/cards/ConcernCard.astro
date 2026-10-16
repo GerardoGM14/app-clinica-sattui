@@ -1,0 +1,28 @@
+---
+import Button from '@components/ui/Button.astro';
+import Photo from '@components/ui/Photo.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  image: string;
+  ctaHref: string;
+  ctaLabel?: string;
+}
+
+const { title, description, image, ctaHref, ctaLabel = 'Agendar consulta' } = Astro.props;
+---
+
+<article class="relative isolate flex h-[372px] flex-col justify-between overflow-hidden rounded-2xl bg-primary-tint px-5 pt-[30px] pb-5">
+  <!-- Cut-out portrait anchored to the bottom, behind the button -->
+  <Photo src={image} alt="" class="absolute inset-x-0 bottom-0 -z-10 mx-auto h-[62%] w-full object-contain object-bottom" />
+
+  <div class="flex flex-col gap-4">
+    <h3 class="text-subtitle-1 font-semibold text-balance text-primary-soft">{title}</h3>
+    <p class="text-caption-1 text-fg-3">{description}</p>
+  </div>
+
+  <Button href={ctaHref} size="sm" iconLeft="calendar-blank" class="self-start" target="_blank" rel="noopener">
+    {ctaLabel}
+  </Button>
+</article>
