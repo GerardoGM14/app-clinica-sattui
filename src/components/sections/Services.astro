@@ -1,0 +1,30 @@
+---
+import Section from '@components/ui/Section.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+import Carousel from '@components/ui/Carousel.astro';
+import ServiceCard from '@components/cards/ServiceCard.astro';
+import { servicesSection, services } from '@data/services';
+import { whatsappLink } from '@data/site';
+---
+
+<Section id="servicios" class="bg-surface-muted">
+  <div class="flex flex-col gap-12">
+    <SectionHeading {...servicesSection} />
+
+    <Carousel label="Servicios">
+      {
+        services.map((service) => (
+          <li>
+            <ServiceCard
+              title={service.title}
+              description={service.description}
+              image={service.image}
+              imageAlt={service.imageAlt}
+              ctaHref={whatsappLink(`Hola, quisiera agendar una consulta sobre: ${service.title}.`)}
+            />
+          </li>
+        ))
+      }
+    </Carousel>
+  </div>
+</Section>
