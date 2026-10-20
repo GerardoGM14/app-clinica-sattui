@@ -1,0 +1,38 @@
+---
+import Button from '@components/ui/Button.astro';
+import Photo from '@components/ui/Photo.astro';
+import { profileDialogId, type Doctor } from '@data/staff';
+
+interface Props {
+  doctor: Doctor;
+}
+
+const { doctor } = Astro.props;
+---
+
+<article class="flex h-full flex-col overflow-hidden rounded-2xl border border-stroke-strong/70 bg-surface">
+  <Photo src={doctor.photo} alt={`Foto de ${doctor.name}`} class="h-[262px] w-full object-cover object-top" />
+
+  <div class="flex flex-1 flex-col justify-between gap-5 p-5">
+    <div class="flex flex-col gap-2">
+      <p class="text-caption-1 text-fg-3">{doctor.specialty}</p>
+      <h3 class="text-lg font-semibold text-fg-1">{doctor.name}</h3>
+      <p class="flex gap-5 text-caption-1 text-fg-3">
+        <span>CMP: {doctor.cmp}</span>
+        <span>RNE: {doctor.rne}</span>
+      </p>
+    </div>
+
+    <!-- Opens the doctor's profile modal (components/staff/DoctorProfileDialog.astro) -->
+    <Button
+      variant="outline"
+      size="sm"
+      iconRight="caret-right"
+      class="self-start"
+      aria-haspopup="dialog"
+      data-dialog-open={profileDialogId(doctor)}
+    >
+      Conocer perfil
+    </Button>
+  </div>
+</article>
