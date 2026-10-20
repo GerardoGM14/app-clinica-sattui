@@ -1,0 +1,25 @@
+---
+interface Props {
+  letter: string;
+  label: string;
+  score: number;
+}
+
+const { letter, label, score } = Astro.props;
+---
+
+<button
+  type="button"
+  aria-pressed="false"
+  class="group flex min-h-11 items-center gap-4 rounded-xl border border-stroke-strong px-4 py-2.5 text-left transition-colors hover:border-primary-soft aria-pressed:border-primary-soft aria-pressed:bg-primary-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+  data-quiz-option
+  data-score={score}
+>
+  <span
+    class="flex size-6 shrink-0 items-center justify-center rounded-full border border-stroke-strong text-caption-1 text-fg-4 group-aria-pressed:border-primary-soft group-aria-pressed:text-primary-soft"
+    aria-hidden="true"
+  >
+    {letter}
+  </span>
+  <span class="text-body-1 text-fg-3">{label}</span>
+</button>

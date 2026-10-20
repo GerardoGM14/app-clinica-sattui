@@ -1,0 +1,33 @@
+---
+interface Props {
+  current: number;
+  total: number;
+}
+
+const { current, total } = Astro.props;
+const percent = Math.round((current / total) * 100);
+// Where the bar starts its grow animation when arriving from the previous question (src/lib/quiz/controller.ts).
+const previousPercent = Math.round(((current - 1) / total) * 100);
+---
+
+<div class="flex flex-col gap-3 border-y border-stroke pt-2.5 pb-4">
+  <div class="flex items-center justify-between text-caption-1 text-fg-3">
+    <span>Pregunta {current} de {total}</span>
+    <span class="font-semibold">{percent} %</span>
+  </div>
+  <div
+    class="h-3 overflow-hidden rounded-full bg-neutral-6"
+    role="progressbar"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-valuenow={percent}
+    aria-label="Progreso del cuestionario"
+  >
+    <div
+      class="h-full rounded-full bg-primary"
+      style={`width: ${percent}%; --progress-from: ${previousPercent}%`}
+      data-progress-fill
+    >
+    </div>
+  </div>
+</div>

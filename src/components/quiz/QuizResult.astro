@@ -1,0 +1,64 @@
+---
+import Badge from '@components/ui/Badge.astro';
+import Button from '@components/ui/Button.astro';
+import Icon from '@components/ui/Icon.astro';
+import { quizResultsIntro, type QuizResult, type ResultId } from '@data/quiz';
+import { whatsappLink } from '@data/site';
+
+interface Props {
+  id: ResultId;
+  result: QuizResult;
+}
+
+const { id, result } = Astro.props;
+const checkboxId = `quiz-include-${id}`;
+---
+
+<div class="flex flex-col gap-8" data-quiz-screen="result" data-result-id={id} hidden>
+  <div class="flex flex-col gap-5">
+    <div class="flex items-center justify-between gap-6">
+      <div class="flex flex-col items-start gap-3.5">
+        <Badge>{quizResultsIntro.badge}</Badge>
+        <h3 class="text-xl leading-tight font-semibold text-fg-1 outline-none md:text-title-2" tabindex="-1" data-quiz-focus>
+          {result.title}
+        </h3>
+      </div>
+      <img src={quizResultsIntro.icon} alt="" aria-hidden="true" class="h-[72px] w-[83px] shrink-0 max-sm:hidden" />
+    </div>
+
+    <p class="text-body-1 text-fg-3">{result.description}</p>
+
+    <hr class="border-stroke" />
+
+    <p class="text-body-1 font-medium text-fg-2">{quizResultsIntro.actionsTitle}</p>
+
+    <ul class="flex flex-col gap-4">
+      {
+        result.actions.map((action) => (
+          <li class="flex items-center gap-2.5 text-body-1 text-fg-3">
+            {action.type === 'avoid' ? (
+              <Icon name="x-circle-fill" size={19} class="text-gold" />
+            ) : (
+              <Icon name="check-circle-fill" size={19} class="text-primary" />
+            )}
+            <span>{action.text}</span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <hr class="border-stroke" />
+
+    <label for={checkboxId} class="flex cursor-pointer items-center gap-2.5 text-caption-1 text-fg-4">
+      <input id={checkboxId} type="checkbox" class="size-5 shrink-0 cursor-pointer accent-primary" data-quiz-include />
+      {quizResultsIntro.includeAnswersLabel}
+    </label>
+  </div>
+
+  <div class="flex flex-wrap gap-3">
+    <Button href={whatsappLink()} iconLeft="calendar-blank" target="_blank" rel="noopener" data-quiz-cta>
+      {quizResultsIntro.ctaLabel}
+    </Button>
+    <Button variant="neutral" data-quiz-restart>{quizResultsIntro.restartLabel}</Button>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+---
+import Section from '@components/ui/Section.astro';
+import QuizIntro from '@components/quiz/QuizIntro.astro';
+import QuizQuestion from '@components/quiz/QuizQuestion.astro';
+import QuizResult from '@components/quiz/QuizResult.astro';
+import Photo from '@components/ui/Photo.astro';
+import { quizIntro, quizQuestions, quizResults, type ResultId } from '@data/quiz';
+
+const results = Object.entries(quizResults) as [ResultId, (typeof quizResults)[ResultId]][];
+---
+
+<Section id="cuestionario" class="relative isolate overflow-hidden">
+  <!-- Full-bleed photo with a light wash on the left so the card stays readable -->
+  <Photo
+    src={quizIntro.background}
+    alt=""
+    aria-hidden="true"
+    widths={[800, 1280, 1920, 2560, 3200]}
+    sizes="100vw"
+    class="absolute inset-0 -z-20 size-full object-cover object-right"
+  />
+  <div class="absolute inset-0 -z-10 bg-linear-to-r from-white/80 via-white/50 to-transparent"></div>
+
+  <div class="flex max-w-[818px] flex-col gap-12 lg:pl-10">
+    <!-- One card, several screens: intro → questions → result. Only one is visible at a time. -->
+    <div class="relative scroll-mt-24 rounded-2xl bg-white/95 px-6 pt-8 pb-6 shadow-sm xl:scroll-mt-36 backdrop-blur-sm md:px-8 md:pt-10 md:pb-8" aria-live="polite" data-quiz data-reveal>
+      <QuizIntro />
+      {quizQuestions.map((question, index) => <QuizQuestion question={question} index={index} total={quizQuestions.length} />)}
+      {results.map(([id, result]) => <QuizResult id={id} result={result} />)}
+    </div>
+
+    <p class="max-w-[553px] text-xs text-fg-4 italic" data-reveal="fade">{quizIntro.disclaimer}</p>
+  </div>
+</Section>
+
+<script>
+  import { initQuiz } from '@lib/quiz/controller';
+
+  const root = document.querySelector<HTMLElement>('[data-quiz]');
+  if (root) initQuiz(root);
+</script>

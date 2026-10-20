@@ -1,0 +1,33 @@
+---
+import IconButton from '@components/ui/IconButton.astro';
+import Button from '@components/ui/Button.astro';
+import QuizProgress from './QuizProgress.astro';
+import QuizOption from './QuizOption.astro';
+import { quizOptions, type QuizQuestion } from '@data/quiz';
+
+interface Props {
+  question: QuizQuestion;
+  index: number;
+  total: number;
+}
+
+const { question, index, total } = Astro.props;
+---
+
+<div class="flex flex-col gap-8" data-quiz-screen="question" data-question-id={question.id} hidden>
+  <div class="flex flex-col gap-5">
+    <IconButton icon="caret-left" label="Pregunta anterior" variant="neutral" data-quiz-back />
+
+    <QuizProgress current={index + 1} total={total} />
+
+    <h3 class="text-xl leading-tight font-semibold text-fg-1 outline-none md:text-title-2" tabindex="-1" data-quiz-focus>
+      {question.text}
+    </h3>
+
+    <div class="grid gap-3 sm:grid-cols-2" role="group" aria-label="Opciones de respuesta">
+      {quizOptions.map((option) => <QuizOption {...option} />)}
+    </div>
+  </div>
+
+  <Button variant="neutral" size="sm" class="self-start" data-quiz-cancel>Cancelar Cuestionario</Button>
+</div>
