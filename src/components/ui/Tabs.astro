@@ -1,0 +1,64 @@
+---
+interface Tab {
+  /** Also the name of the slot holding this tab's content. */
+  id: string;
+  label: string;
+}
+
+interface Props {
+  /** Unique prefix for the tab/panel ids (several tab groups can live on one page). */
+  id: string;
+  tabs: Tab[];
+  /** Accessible name of the tab list. */
+  label: string;
+  class?: string;
+  panelClass?: string;
+}
+
+const { id, tabs, label, class: className, panelClass } = Astro.props;
+const panels = await Promise.all(tabs.map((tab) => Astro.slots.render(tab.id)));
+---
+
+<div class:list={['flex flex-col gap-6', className]} data-tabs>
+  <div
+    role="tablist"
+    aria-label={label}
+    class="flex shrink-0 overflow-x-auto border-b border-stroke-strong [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+  >
+    {
+      tabs.map((tab, i) => (
+        <button
+          type="button"
+          role="tab"
+          id={`${id}-tab-${tab.id}`}
+          aria-controls={`${id}-panel-${tab.id}`}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          tabindex={i === 0 ? 0 : -1}
+          class="-mb-px shrink-0 border-b border-transparent px-5 pb-5 text-body-1 whitespace-nowrap text-fg-3 transition-colors hover:text-primary-deep aria-selected:border-primary-soft aria-selected:font-semibold aria-selected:text-primary-deep max-sm:flex-1 max-sm:px-2 max-sm:pb-4 max-sm:text-caption-1"
+        >
+          {tab.label}
+        </button>
+      ))
+    }
+  </div>
+
+  {
+    tabs.map((tab, i) => (
+      <div
+        role="tabpanel"
+        id={`${id}-panel-${tab.id}`}
+        aria-labelledby={`${id}-tab-${tab.id}`}
+        tabindex="0"
+        hidden={i !== 0}
+        class={panelClass}
+      >
+        <Fragment set:html={panels[i]} />
+      </div>
+    ))
+  }
+</div>
+
+<script>
+  import { initTabs } from '@lib/tabs';
+  initTabs();
+</script>

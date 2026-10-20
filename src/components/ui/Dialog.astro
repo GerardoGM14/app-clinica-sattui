@@ -1,0 +1,34 @@
+---
+import IconButton from './IconButton.astro';
+
+interface Props {
+  /** Open it from any element with data-dialog-open={id}. */
+  id: string;
+  /** Accessible name announced when the dialog opens. */
+  label: string;
+  class?: string;
+}
+
+const { id, label, class: className } = Astro.props;
+---
+
+<!-- Native modal <dialog>: traps focus, closes with Esc and sits above the page. -->
+<dialog
+  id={id}
+  aria-label={label}
+  class:list={[
+    'm-auto max-h-[90dvh] w-[calc(100%-2rem)] max-w-[888px] overflow-y-auto rounded-2xl bg-surface p-0 text-fg-2 shadow-xl md:overflow-hidden',
+    // Plain translucent tint: a backdrop blur would be recalculated every frame and make opening lag.
+    'backdrop:bg-ink/60',
+    className,
+  ]}
+  data-dialog
+>
+  <IconButton icon="x" label="Cerrar" variant="neutral" class="absolute top-4 right-4 z-10 md:top-10 md:right-8" data-dialog-close />
+  <slot />
+</dialog>
+
+<script>
+  import { initDialogs } from '@lib/dialog';
+  initDialogs();
+</script>
