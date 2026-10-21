@@ -1,0 +1,30 @@
+---
+import Badge from '@components/ui/Badge.astro';
+import Icon from '@components/ui/Icon.astro';
+import { paymentInfo } from '@data/booking';
+
+interface Props {
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { class: className, ...attrs } = Astro.props;
+---
+
+<aside class:list={['flex w-[286px] flex-col gap-3 rounded-xl bg-primary p-6 shadow-lg', className]} aria-label={paymentInfo.title} {...attrs}>
+  <h3 class="text-lg font-semibold text-primary-line">{paymentInfo.title}</h3>
+  <p class="text-caption-1 text-white/90">{paymentInfo.description}</p>
+  <ul class="flex flex-wrap gap-3">
+    {
+      paymentInfo.methods.map((method) => (
+        <li>
+          <Badge variant="on-dark">
+            {method.logo && <img src={method.logo} alt="" class="size-5 rounded" />}
+            {method.icon && <Icon name={method.icon} size={20} class="text-primary-line" />}
+            {method.label}
+          </Badge>
+        </li>
+      ))
+    }
+  </ul>
+</aside>

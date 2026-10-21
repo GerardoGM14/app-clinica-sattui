@@ -1,0 +1,19 @@
+---
+interface Props {
+  number: number;
+  title: string;
+  description: string;
+}
+
+const { number, title, description } = Astro.props;
+---
+
+<div class="flex items-start gap-5">
+  <span class="flex size-[50px] shrink-0 items-center justify-center rounded-md bg-primary-tint text-[28px] text-primary-soft" aria-hidden="true">
+    {String(number).padStart(2, '0')}
+  </span>
+  <div class="flex flex-col gap-2 pt-2">
+    <h3 class="text-lg leading-snug font-semibold text-fg-1">{title}</h3>
+    <p class="text-caption-1 text-fg-3">{description}</p>
+  </div>
+</div>
