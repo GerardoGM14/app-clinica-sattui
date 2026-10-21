@@ -1,0 +1,35 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  question: string;
+  /** Items sharing a group name behave as an exclusive accordion (one open at a time). */
+  group?: string;
+}
+
+const { question, group } = Astro.props;
+---
+
+<details data-accordion data-accordion-group={group} class="group border-b border-stroke last:border-b-0">
+  <summary
+    class="flex cursor-pointer list-none items-center justify-between gap-4 px-3 py-4 text-body-1 text-fg-2 transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-primary [&::-webkit-details-marker]:hidden"
+  >
+    {question}
+    <Icon
+      name="caret-down"
+      size={20}
+      class="text-primary-soft transition-transform group-[[open]:not([data-closing])]:rotate-180"
+    />
+  </summary>
+  <!-- The outer box is the one whose height animates; padding lives inside so it can collapse to 0. -->
+  <div data-accordion-content>
+    <div class="px-3 pb-4 text-caption-1 text-fg-3">
+      <slot />
+    </div>
+  </div>
+</details>
+
+<script>
+  import { initAccordions } from '@lib/accordion';
+  initAccordions();
+</script>
