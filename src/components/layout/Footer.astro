@@ -1,0 +1,61 @@
+---
+import Container from '@components/ui/Container.astro';
+import Logo from '@components/ui/Logo.astro';
+import Button from '@components/ui/Button.astro';
+import Icon from '@components/ui/Icon.astro';
+import { navLinks, socialLinks, footer } from '@data/site';
+---
+
+<footer class="bg-surface">
+  <Container class="flex flex-col gap-5 pt-16 pb-5 md:pt-20">
+    <div class="flex flex-col items-center gap-14">
+      <div class="flex flex-col items-center gap-7 text-center">
+        <Logo size="lg" />
+        <p class="max-w-[542px] text-body-1 text-fg-2">{footer.description}</p>
+      </div>
+
+      <nav aria-label="Pie de página">
+        <ul class="flex flex-wrap justify-center">
+          {
+            navLinks.map((link) => (
+              <li>
+                <Button href={link.href} variant="ghost" size="sm" class="sm:h-12 sm:text-action">
+                  {link.label}
+                </Button>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+
+    <div class="flex flex-col-reverse items-center gap-4 border-t border-gold/20 pt-5 sm:flex-row sm:justify-between">
+      <p class="text-caption-1 text-fg-2 max-sm:text-center">{footer.copyright}</p>
+      <ul class="flex gap-4">
+        {
+          socialLinks.map((social) => (
+            <li>
+              <a
+                href={social.href}
+                target="_blank"
+                rel="noopener"
+                aria-label={social.label}
+                class="flex size-[52px] items-center justify-center rounded-full text-fg-1 transition-colors hover:bg-primary/5 hover:text-primary"
+              >
+                <Icon name={social.icon} size={32} />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </Container>
+
+  <div class="flex h-10 items-center justify-center gap-2.5 bg-surface-strong text-caption-1 text-fg-2">
+    {footer.credit.prefix}
+    <!-- The exported logo is white; brightness-0 renders it dark as in the design. -->
+    <a href={footer.credit.url} target="_blank" rel="noopener" class="cursor-pointer transition-opacity hover:opacity-70">
+      <img src={footer.credit.logo} alt={footer.credit.name} class="h-3.5 w-auto opacity-85 brightness-0" />
+    </a>
+  </div>
+</footer>
