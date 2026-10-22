@@ -1,0 +1,32 @@
+---
+import Section from '@components/ui/Section.astro';
+import Button from '@components/ui/Button.astro';
+import { ctaSection } from '@data/cta';
+import { contact, whatsappLink } from '@data/site';
+---
+
+<Section id="contacto" class="relative isolate overflow-hidden bg-primary-dark">
+  <img
+    src={ctaSection.decoration}
+    alt=""
+    aria-hidden="true"
+    loading="lazy"
+    class="pointer-events-none absolute -top-2 left-[69%] -z-10 h-[628px] w-[610px] max-md:hidden"
+  />
+
+  <div class="mx-auto flex max-w-[620px] flex-col items-center gap-8 text-center">
+    <div class="flex flex-col gap-6">
+      <h2 class="text-3xl leading-tight font-semibold text-white md:text-title-1">{ctaSection.title}</h2>
+      <p class="text-body-1 text-white/90">{ctaSection.subtitle}</p>
+    </div>
+
+    <div class="flex flex-wrap justify-center gap-3">
+      <Button href={whatsappLink()} variant="gold" iconLeft="calendar-blank" target="_blank" rel="noopener">
+        {ctaSection.primaryLabel}
+      </Button>
+      <Button href={contact.phoneHref} variant="outline-light" iconLeft="phone-call">
+        {ctaSection.callLabel}
+      </Button>
+    </div>
+  </div>
+</Section>
