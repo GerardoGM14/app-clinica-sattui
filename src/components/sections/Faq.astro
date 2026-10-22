@@ -1,0 +1,36 @@
+---
+import Section from '@components/ui/Section.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+import AccordionItem from '@components/ui/AccordionItem.astro';
+import Photo from '@components/ui/Photo.astro';
+import { faqSection, faqItems } from '@data/faq';
+---
+
+<Section id="preguntas-frecuentes" class="relative isolate overflow-hidden bg-blush">
+  <!-- The photo is the full section background (the pink right side is part of the image).
+       On mobile it becomes a top band, anchored left so the couple stays in view. -->
+  <div class="absolute inset-x-0 top-0 -z-10 h-80 lg:inset-y-0 lg:h-auto" data-reveal="fade">
+    <Photo
+      src={faqSection.image.src}
+      alt={faqSection.image.alt}
+      widths={[800, 1280, 1920, 2560]}
+      sizes="100vw"
+      class="size-full object-cover object-left"
+    />
+    <div class="absolute inset-0 bg-linear-to-b from-transparent to-blush lg:hidden"></div>
+  </div>
+
+  <div class="ml-auto flex max-w-[622px] flex-col gap-6 rounded-2xl bg-white/95 px-4 pt-8 pb-6 shadow-sm max-lg:mt-48 sm:px-8 sm:pt-10 lg:mr-12" data-reveal="right">
+    <SectionHeading {...faqSection} reveal={false} />
+
+    <div>
+      {
+        faqItems.map((item) => (
+          <AccordionItem question={item.question} group="faq">
+            <p>{item.answer}</p>
+          </AccordionItem>
+        ))
+      }
+    </div>
+  </div>
+</Section>
