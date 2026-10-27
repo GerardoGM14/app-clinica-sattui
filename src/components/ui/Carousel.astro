@@ -15,13 +15,14 @@ const { label, class: className } = Astro.props;
   the script below wires the arrows and dots. Controls hide when every card fits.
   Cards per view: 1 (mobile, with a peek of the next one), 2 (sm), 3 (md), 4 (lg).
   The cards appear one by one the first time the carousel scrolls into view (src/lib/reveal.ts).
+  When every card fits, auto margins on the first/last card center them; with more cards they resolve to 0.
 -->
 <div class:list={['flex flex-col items-center gap-6', className]} role="region" aria-roledescription="carrusel" aria-label={label} data-carousel>
   <div class="flex w-full items-center gap-6">
     <IconButton icon="caret-left" label="Anterior" class="max-md:hidden" data-carousel-prev />
 
     <ul
-      class="-mb-6 flex min-w-0 flex-1 snap-x snap-mandatory gap-4 overflow-x-auto pb-6 [scrollbar-width:none] *:shrink-0 *:snap-start *:basis-[85%] sm:*:basis-[calc((100%-1rem)/2)] md:*:basis-[calc((100%-2rem)/3)] lg:*:basis-[calc((100%-3rem)/4)] [&::-webkit-scrollbar]:hidden"
+      class="-mb-6 flex min-w-0 flex-1 snap-x snap-mandatory gap-4 overflow-x-auto pb-6 [scrollbar-width:none] *:shrink-0 *:snap-start *:basis-[85%] sm:*:basis-[calc((100%-1rem)/2)] md:*:basis-[calc((100%-2rem)/3)] lg:*:basis-[calc((100%-3rem)/4)] [&::-webkit-scrollbar]:hidden [&>:first-child]:ms-auto [&>:last-child]:me-auto"
       data-carousel-track
       data-reveal-stagger
       data-reveal-items
