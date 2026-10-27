@@ -59,8 +59,8 @@ const drSattui: Doctor = {
   ],
 };
 
-// TODO: the design repeats the same doctor as a placeholder; replace with the real team.
-export const staff: Doctor[] = [drSattui, drSattui, drSattui, drSattui];
+// Add the rest of the team here; the carousel arrows appear once the cards no longer fit.
+export const staff: Doctor[] = [drSattui];
 
 /** Each doctor once, so every profile modal is rendered a single time. */
 export const uniqueDoctors = [...new Map(staff.map((doctor) => [doctor.id, doctor])).values()];
