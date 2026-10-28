@@ -21,9 +21,9 @@ const portrait = doctor.profilePhoto && getPhoto(doctor.profilePhoto) ? doctor.p
 <Dialog id={dialogId} label={`Perfil de ${doctor.name}`}>
   <div class="flex flex-col gap-7 p-6 md:h-[520px] md:max-h-[90dvh] md:flex-row md:p-8">
     <!-- Info + tabs -->
-    <div class="flex min-w-0 flex-1 flex-col gap-8 max-md:order-last md:min-h-0 md:pt-5">
-      <div class="flex flex-col gap-5">
-        <div class="flex flex-col gap-3">
+    <div class="flex min-w-0 flex-1 flex-col gap-8 max-md:order-last md:min-h-0">
+      <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-1.5">
           <h2 class="text-2xl leading-tight font-semibold text-fg-1 md:text-title-2">{doctor.name}</h2>
           <p class="text-body-1 leading-tight text-fg-4">{doctor.specialty}</p>
         </div>
