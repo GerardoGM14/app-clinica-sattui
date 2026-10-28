@@ -42,19 +42,18 @@ const drSattui: Doctor = {
   bio: 'Médico especialista en Ginecología y Obstetricia, con formación avanzada en Medicina Fetal y Reproducción Humana. Cuenta con experiencia clínica y quirúrgica en el manejo de embarazos de alto riesgo y diversas patologías ginecológicas.',
   expertise: ['Medicina Fetal', 'Cirugía Ginecológica', 'Endometriosis', 'Fertilidad y Reproducción Humana'],
   education: [
-    { title: 'Título de Médico Cirujano', subtitle: 'Universidad San Pedro (2019).' },
     {
       title: 'Especialización en Ginecología y Obstetricia',
-      subtitle: 'Universidad Nacional de la Amazonía Peruana (2021–2024).',
+      subtitle: 'Universidad Nacional de la Amazonía Peruana.',
     },
-    { title: 'Máster Propio en Reproducción Humana', subtitle: 'Universitat de València, España (2023–2024).' },
+    { title: 'Máster Propio en Reproducción Humana', subtitle: 'Universitat de València, España.' },
     {
       title: 'Maestría en Medicina con mención en Ginecología y Obstetricia',
-      subtitle: 'Universidad de San Martín de Porres (2024–2026).',
+      subtitle: 'Universidad de San Martín de Porres.',
     },
     {
       title: 'Fellowship en Medicina Fetal',
-      subtitle: 'Instituto Peruano de Medicina y Cirugía Fetal (USMP) (2024–2026).',
+      subtitle: 'Instituto Peruano de Medicina y Cirugía Fetal (USMP).',
     },
   ],
 };
