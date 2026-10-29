@@ -36,6 +36,16 @@ export const faqItems: FaqItem[] = [
       'Busca un lugar privado y con buena conexión a internet. Ten a la mano tus exámenes o ecografías previas, la lista de medicamentos que tomas y la fecha de tu última menstruación.',
   },
   {
+    question: '¿Puedo reprogramar mi consulta?',
+    answer:
+      'Sí, puedes reprogramar tu cita una sola vez, avisándonos por WhatsApp con anticipación. Si necesitas reprogramarla por segunda vez, se pierde el pago realizado.',
+  },
+  {
+    question: '¿Qué pasa si llego tarde a mi consulta?',
+    answer:
+      'Te recomendamos conectarte o acudir 15 minutos antes de la hora pactada. Contamos con una tolerancia de 15 minutos; si se supera, la cita se reprograma y cuenta como tu única reprogramación permitida.',
+  },
+  {
     question: '¿Puedo consultar por cualquier molestia ginecológica?',
     answer:
       'Sí, puedes consultar por la mayoría de molestias ginecológicas y obstétricas. Si tu caso requiere un examen físico o pruebas adicionales, te indicaremos los pasos para una evaluación presencial. Ante sangrado abundante, dolor intenso o fiebre, acude a un servicio de emergencia.',
