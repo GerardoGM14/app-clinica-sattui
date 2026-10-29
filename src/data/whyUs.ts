@@ -1,5 +1,10 @@
+import type { IconName } from '@components/ui/icons';
+
 export interface Feature {
-  icon: string;
+  /** Custom SVG from the design (path in /public). */
+  icon?: string;
+  /** Phosphor icon, used until a custom SVG exists. */
+  iconName?: IconName;
   title: string;
   description: string;
 }
@@ -31,5 +36,15 @@ export const features: Feature[] = [
     icon: '/images/icons/medical-support.svg',
     title: 'Acompañamiento médico',
     description: 'Recibe orientación sobre las alternativas de atención y los pasos a seguir según tu caso.',
+  },
+  {
+    iconName: 'shield-check-light',
+    title: 'Protocolos de bioseguridad',
+    description: 'Tu atención cumple con los protocolos de bioseguridad para proteger tu salud en cada etapa.',
+  },
+  {
+    iconName: 'hospital-light',
+    title: 'Cirugías en clínicas certificadas',
+    description: 'Los procedimientos quirúrgicos se realizan en clínicas certificadas, con equipamiento y personal calificado.',
   },
 ];

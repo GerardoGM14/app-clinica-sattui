@@ -8,9 +8,11 @@ import caretLeft from '@phosphor-icons/core/assets/regular/caret-left.svg?raw';
 import caretRight from '@phosphor-icons/core/assets/regular/caret-right.svg?raw';
 import checkCircleFill from '@phosphor-icons/core/assets/fill/check-circle-fill.svg?raw';
 import facebookLogo from '@phosphor-icons/core/assets/regular/facebook-logo.svg?raw';
+import hospitalLight from '@phosphor-icons/core/assets/light/hospital-light.svg?raw';
 import instagramLogo from '@phosphor-icons/core/assets/regular/instagram-logo.svg?raw';
 import list from '@phosphor-icons/core/assets/regular/list.svg?raw';
 import phoneCall from '@phosphor-icons/core/assets/regular/phone-call.svg?raw';
+import shieldCheckLight from '@phosphor-icons/core/assets/light/shield-check-light.svg?raw';
 import tiktokLogo from '@phosphor-icons/core/assets/regular/tiktok-logo.svg?raw';
 import videoCamera from '@phosphor-icons/core/assets/regular/video-camera.svg?raw';
 import x from '@phosphor-icons/core/assets/regular/x.svg?raw';
@@ -25,9 +27,11 @@ export const icons = {
   'caret-right': caretRight,
   'check-circle-fill': checkCircleFill,
   'facebook-logo': facebookLogo,
+  'hospital-light': hospitalLight,
   'instagram-logo': instagramLogo,
   list,
   'phone-call': phoneCall,
+  'shield-check-light': shieldCheckLight,
   'tiktok-logo': tiktokLogo,
   'video-camera': videoCamera,
   x,
