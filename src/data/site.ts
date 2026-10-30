@@ -3,7 +3,7 @@ import type { IconName } from '@components/ui/icons';
 
 export const site = {
   name: 'Dr. Flavio Sattui',
-  tagline: 'Atención Ginecológica',
+  tagline: 'Atención Médica Especializada',
   description:
     'Orientación médica virtual en ginecología y obstetricia. Resuelve tus dudas y recibe atención profesional según tus necesidades.',
   lang: 'es',
