@@ -5,25 +5,48 @@ interface Tab {
   label: string;
 }
 
+type Variant = 'underline' | 'pill';
+
 interface Props {
   /** Unique prefix for the tab/panel ids (several tab groups can live on one page). */
   id: string;
   tabs: Tab[];
   /** Accessible name of the tab list. */
   label: string;
+  /** "underline" (default): text tabs over a line. "pill": centered segmented switch. */
+  variant?: Variant;
+  /** Scroll-reveal animation for the tab list. */
+  reveal?: boolean;
   class?: string;
   panelClass?: string;
 }
 
-const { id, tabs, label, class: className, panelClass } = Astro.props;
-const panels = await Promise.all(tabs.map((tab) => Astro.slots.render(tab.id)));
+const { id, tabs, label, variant = 'underline', reveal = false, class: className, panelClass } = Astro.props;
+
+const styles: Record<Variant, { list: string; tab: string }> = {
+  underline: {
+    list: 'flex shrink-0 overflow-x-auto border-b border-stroke-strong [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
+    tab: '-mb-px shrink-0 border-b border-transparent px-5 pb-5 text-body-1 whitespace-nowrap text-fg-3 transition-colors hover:text-primary-deep aria-selected:border-primary-soft aria-selected:font-semibold aria-selected:text-primary-deep max-sm:flex-1 max-sm:px-2 max-sm:pb-4 max-sm:text-caption-1',
+  },
+  pill: {
+    list: 'flex gap-1 self-center rounded-full border border-stroke bg-surface p-1 max-sm:w-full',
+    tab: 'rounded-full px-6 py-3 text-action-sm font-medium text-fg-3 transition-colors hover:text-primary aria-selected:bg-primary aria-selected:text-white max-sm:flex-1 max-sm:px-3 max-sm:py-2.5 max-sm:text-caption-1 max-sm:leading-tight',
+  },
+};
+const s = styles[variant];
+// Each tab's content comes from the slot named after it; tabs without one expect a
+// <TabPanel> in the default slot instead (for panels generated in a loop).
+const panels = await Promise.all(
+  tabs.map((tab) => (Astro.slots.has(tab.id) ? Astro.slots.render(tab.id) : undefined)),
+);
 ---
 
 <div class:list={['flex flex-col gap-6', className]} data-tabs>
   <div
     role="tablist"
     aria-label={label}
-    class="flex shrink-0 overflow-x-auto border-b border-stroke-strong [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+    class={s.list}
+    data-reveal={reveal ? '' : undefined}
   >
     {
       tabs.map((tab, i) => (
@@ -34,7 +57,7 @@ const panels = await Promise.all(tabs.map((tab) => Astro.slots.render(tab.id)));
           aria-controls={`${id}-panel-${tab.id}`}
           aria-selected={i === 0 ? 'true' : 'false'}
           tabindex={i === 0 ? 0 : -1}
-          class="-mb-px shrink-0 border-b border-transparent px-5 pb-5 text-body-1 whitespace-nowrap text-fg-3 transition-colors hover:text-primary-deep aria-selected:border-primary-soft aria-selected:font-semibold aria-selected:text-primary-deep max-sm:flex-1 max-sm:px-2 max-sm:pb-4 max-sm:text-caption-1"
+          class={s.tab}
         >
           {tab.label}
         </button>
@@ -43,7 +66,7 @@ const panels = await Promise.all(tabs.map((tab) => Astro.slots.render(tab.id)));
   </div>
 
   {
-    tabs.map((tab, i) => (
+    tabs.map((tab, i) => panels[i] !== undefined && (
       <div
         role="tabpanel"
         id={`${id}-panel-${tab.id}`}
@@ -56,6 +79,7 @@ const panels = await Promise.all(tabs.map((tab) => Astro.slots.render(tab.id)));
       </div>
     ))
   }
+  <slot />
 </div>
 
 <script>
