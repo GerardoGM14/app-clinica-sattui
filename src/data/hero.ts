@@ -1,10 +1,10 @@
 import { whatsappLink } from './site';
 
 export const hero = {
-  eyebrow: 'Ginecología y Obstetricia - Consultas virtuales',
+  eyebrow: 'Especialistas médicos - Consultas virtuales',
   title: 'Tu salud merece atención y orientación especializada.',
   description:
-    'Encuentra orientación médica en ginecología y obstetricia, resuelve tus dudas y recibe atención profesional según tus necesidades.',
+    'Consulta con médicos especialistas, resuelve tus dudas y recibe atención profesional según tus necesidades, desde donde te encuentres.',
   primaryCta: { label: 'Agendar consulta', href: whatsappLink() },
   secondaryCta: { label: 'Nuestros Servicios', href: '#servicios' },
   image: {

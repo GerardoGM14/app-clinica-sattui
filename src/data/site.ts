@@ -5,7 +5,7 @@ export const site = {
   name: 'Dr. Flavio Sattui',
   tagline: 'Atención Médica Especializada',
   description:
-    'Orientación médica virtual en ginecología y obstetricia. Resuelve tus dudas y recibe atención profesional según tus necesidades.',
+    'Orientación médica virtual con especialistas. Resuelve tus dudas y recibe atención profesional según tus necesidades.',
   lang: 'es',
 };
 
@@ -57,7 +57,7 @@ export const socialLinks: SocialLink[] = [
 export const footer = {
   // TODO: the design uses placeholder (lorem ipsum) text here; confirm the final copy.
   description:
-    'Orientación médica virtual en ginecología y obstetricia para acompañarte en cada etapa de tu salud.',
+    'Orientación médica virtual con especialistas para acompañarte en cada etapa de tu salud.',
   copyright: `© ${new Date().getFullYear()} ${site.name} ${site.tagline}. Todos los derechos reservados.`,
   credit: {
     prefix: 'Website by',
