@@ -1,6 +1,6 @@
 export interface Education {
   title: string;
-  /** Institution and dates. */
+  /** Institution. */
   subtitle: string;
 }
 
@@ -10,7 +10,10 @@ export interface Doctor {
   name: string;
   specialty: string;
   cmp: string;
-  rne: string;
+  /** Specialist registry number; omitted while it is pending. */
+  rne?: string;
+  /** Medical auditor registry number (RNA), when the doctor has one. */
+  rna?: string;
   /** Photo for the staff card (path inside src/assets/images). */
   photo: string;
   /** Portrait for the profile modal. Falls back to `photo` while the file is missing. */
@@ -58,8 +61,25 @@ const drSattui: Doctor = {
   ],
 };
 
+const draGonzales: Doctor = {
+  id: 'nickole-gonzales',
+  name: 'Dra. Nickole Gonzales Villela',
+  specialty: 'Especialista en Otorrinolaringología.',
+  cmp: '98968',
+  rna: 'A13165',
+  photo: 'staff/nickole-gonzales.png',
+  profilePhoto: 'staff/nickole-gonzales-profile.png',
+  bio: 'Médica especialista en Otorrinolaringología, con experiencia en el diagnóstico y tratamiento integral de enfermedades del oído, nariz, garganta y estructuras de cabeza y cuello. Además, cuenta con experiencia en Medicina Ocupacional, Auditoría Médica y Medicina Estética, brindando una atención integral, segura y centrada en el paciente.',
+  expertise: ['Otorrinolaringología', 'Medicina Ocupacional', 'Auditoría Médica', 'Medicina Estética'],
+  education: [
+    { title: 'Especialización en Otorrinolaringología', subtitle: 'Universidad Nacional de Trujillo.' },
+    { title: 'Medicina Ocupacional', subtitle: 'Faculdade do Centro Oeste Paulista (FACOP), Brasil.' },
+    { title: 'Auditoría Médica', subtitle: 'Universidad Nacional Jorge Basadre Grohmann, Tacna.' },
+  ],
+};
+
 // Add the rest of the team here; the carousel arrows appear once the cards no longer fit.
-export const staff: Doctor[] = [drSattui];
+export const staff: Doctor[] = [drSattui, draGonzales];
 
 /** Each doctor once, so every profile modal is rendered a single time. */
 export const uniqueDoctors = [...new Map(staff.map((doctor) => [doctor.id, doctor])).values()];

@@ -29,7 +29,8 @@ const portrait = doctor.profilePhoto && getPhoto(doctor.profilePhoto) ? doctor.p
         </div>
         <div class="flex flex-wrap gap-2.5">
           <Badge>CMP: {doctor.cmp}</Badge>
-          <Badge>RNE: {doctor.rne}</Badge>
+          {doctor.rne && <Badge>RNE: {doctor.rne}</Badge>}
+          {doctor.rna && <Badge>RNA: {doctor.rna}</Badge>}
         </div>
       </div>
 
