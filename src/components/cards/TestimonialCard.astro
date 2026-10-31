@@ -1,0 +1,43 @@
+---
+import Icon from '@components/ui/Icon.astro';
+import { specialties } from '@data/specialties';
+import type { Testimonial } from '@data/testimonials';
+
+interface Props {
+  testimonial: Testimonial;
+  class?: string;
+}
+
+const { testimonial, class: className } = Astro.props;
+const { name, detail, specialty, rating, text } = testimonial;
+
+const initials = name
+  .split(' ')
+  .map((part) => part[0])
+  .join('')
+  .slice(0, 2);
+const specialtyLabel = specialties.find((s) => s.id === specialty)?.label;
+---
+
+<figure class:list={['flex h-full flex-col gap-5 rounded-2xl border border-stroke bg-surface p-6', className]}>
+  <div class="flex items-center justify-between">
+    <div class="flex gap-1 text-gold" aria-label={`${rating} de 5 estrellas`} role="img">
+      {Array.from({ length: rating }, () => <Icon name="star-fill" size={18} />)}
+    </div>
+    <Icon name="quotes-fill" size={32} class="text-primary-line" />
+  </div>
+
+  <blockquote class="flex-1 text-body-1 text-fg-2">
+    <p>“{text}”</p>
+  </blockquote>
+
+  <figcaption class="flex items-center gap-3">
+    <span class="grid size-11 shrink-0 place-items-center rounded-full bg-primary-tint text-body-1 font-semibold text-primary" aria-hidden="true">
+      {initials}
+    </span>
+    <span class="flex flex-col leading-tight">
+      <span class="text-body-1 font-semibold text-fg-1">{name}</span>
+      <span class="text-caption-1 text-fg-4">{detail} · {specialtyLabel}</span>
+    </span>
+  </figcaption>
+</figure>

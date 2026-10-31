@@ -12,7 +12,9 @@ import hospitalLight from '@phosphor-icons/core/assets/light/hospital-light.svg?
 import instagramLogo from '@phosphor-icons/core/assets/regular/instagram-logo.svg?raw';
 import list from '@phosphor-icons/core/assets/regular/list.svg?raw';
 import phoneCall from '@phosphor-icons/core/assets/regular/phone-call.svg?raw';
+import quotesFill from '@phosphor-icons/core/assets/fill/quotes-fill.svg?raw';
 import shieldCheckLight from '@phosphor-icons/core/assets/light/shield-check-light.svg?raw';
+import starFill from '@phosphor-icons/core/assets/fill/star-fill.svg?raw';
 import tiktokLogo from '@phosphor-icons/core/assets/regular/tiktok-logo.svg?raw';
 import videoCamera from '@phosphor-icons/core/assets/regular/video-camera.svg?raw';
 import x from '@phosphor-icons/core/assets/regular/x.svg?raw';
@@ -31,7 +33,9 @@ export const icons = {
   'instagram-logo': instagramLogo,
   list,
   'phone-call': phoneCall,
+  'quotes-fill': quotesFill,
   'shield-check-light': shieldCheckLight,
+  'star-fill': starFill,
   'tiktok-logo': tiktokLogo,
   'video-camera': videoCamera,
   x,

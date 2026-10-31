@@ -1,0 +1,23 @@
+---
+import Section from '@components/ui/Section.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+import Carousel from '@components/ui/Carousel.astro';
+import TestimonialCard from '@components/cards/TestimonialCard.astro';
+import { testimonialsSection, testimonials } from '@data/testimonials';
+---
+
+<Section id="testimonios">
+  <div class="flex flex-col gap-12">
+    <SectionHeading {...testimonialsSection} />
+
+    <Carousel label="Testimonios">
+      {
+        testimonials.map((testimonial) => (
+          <li>
+            <TestimonialCard testimonial={testimonial} />
+          </li>
+        ))
+      }
+    </Carousel>
+  </div>
+</Section>
