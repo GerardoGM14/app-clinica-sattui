@@ -13,16 +13,20 @@ interface Props {
 const { title, description, image, ctaHref, ctaLabel = 'Agendar consulta' } = Astro.props;
 ---
 
-<article class="relative isolate flex h-[372px] flex-col justify-between overflow-hidden rounded-2xl bg-primary-tint px-5 pt-[30px] pb-5">
-  <!-- Cut-out portrait anchored to the bottom, behind the button -->
-  <Photo src={image} alt="" class="absolute inset-x-0 bottom-0 -z-10 mx-auto h-[62%] w-full object-contain object-bottom" />
-
-  <div class="flex flex-col gap-4">
+<article class="@container relative flex h-[372px] flex-col overflow-hidden rounded-2xl bg-primary-tint pt-[30px]">
+  <div class="flex flex-col gap-4 px-5">
     <h3 class="text-subtitle-1 font-semibold text-balance text-primary-soft">{title}</h3>
     <p class="text-caption-1 text-fg-3">{description}</p>
   </div>
 
-  <Button href={ctaHref} size="sm" iconLeft="calendar-blank" class="self-start" target="_blank" rel="noopener">
+  <!-- The cut-out portrait fills only the space left below the text, so long copy never overlaps it.
+       Files are trimmed vertically (no transparent rows), so every portrait sits on the same baseline. -->
+  <div class="relative mt-4 min-h-0 flex-1">
+    <Photo src={image} alt="" class="absolute inset-0 size-full object-contain object-bottom" />
+  </div>
+
+  <!-- In narrow cards (4 per view around 1024px) the button spans the card and drops its icon to fit. -->
+  <Button href={ctaHref} size="sm" iconLeft="calendar-blank" class="absolute bottom-5 left-5 @max-[14rem]:inset-x-4 @max-[14rem]:px-3 @max-[14rem]:[&>span]:hidden" target="_blank" rel="noopener">
     {ctaLabel}
   </Button>
 </article>
