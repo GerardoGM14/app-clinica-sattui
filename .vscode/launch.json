@@ -2,8 +2,20 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "command": "./node_modules/.bin/astro dev",
-      "name": "Development server",
+      "command": "npm run dev:landing",
+      "name": "Landing (Astro)",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
+      "command": "npm run dev:panel",
+      "name": "Panel (React)",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
+      "command": "npm run emulators",
+      "name": "Firebase emulators",
       "request": "launch",
       "type": "node-terminal"
     }

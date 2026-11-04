@@ -1,5 +1,13 @@
 {
   "projects": {
     "default": "app-clinica-sattui"
+  },
+  "targets": {
+    "app-clinica-sattui": {
+      "hosting": {
+        "landing": ["app-clinica-sattui"],
+        "panel": ["app-clinica-sattui-panel"]
+      }
+    }
   }
 }

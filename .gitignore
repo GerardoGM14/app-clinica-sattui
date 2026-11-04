@@ -1,7 +1,9 @@
 # build output
 dist/
+backend/functions/lib/
 # generated types
 .astro/
+*.tsbuildinfo
 
 # dependencies
 node_modules/
@@ -26,3 +28,6 @@ pnpm-debug.log*
 # firebase
 .firebase/
 firebase-debug.log
+firestore-debug.log
+ui-debug.log
+*-debug.log

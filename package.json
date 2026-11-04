@@ -1,0 +1,22 @@
+{
+  "name": "app-clinica-sattui",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "install:all": "npm install && npm --prefix landing install && npm --prefix frontend install && npm --prefix backend/functions install",
+    "dev:landing": "npm --prefix landing run dev",
+    "dev:panel": "npm --prefix frontend run dev",
+    "emulators": "npm --prefix backend/functions run build && firebase emulators:start --only auth,firestore,functions",
+    "seed": "npm --prefix backend/functions run seed",
+    "build": "npm --prefix landing run build && npm --prefix frontend run build && npm --prefix backend/functions run build",
+    "deploy:landing": "npm --prefix landing run build && firebase deploy --only hosting:landing",
+    "deploy:panel": "npm --prefix frontend run build && firebase deploy --only hosting:panel",
+    "deploy:backend": "firebase deploy --only firestore,functions"
+  },
+  "devDependencies": {
+    "firebase-tools": "^15.35.0"
+  }
+}

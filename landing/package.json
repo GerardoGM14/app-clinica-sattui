@@ -9,8 +9,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro",
-    "deploy": "astro build && firebase deploy --only hosting"
+    "astro": "astro"
   },
   "dependencies": {
     "@fontsource/poppins": "^5.3.0",
@@ -22,7 +21,6 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
-    "firebase-tools": "^15.34.1",
     "typescript": "^6.0.3"
   }
 }
