@@ -1,0 +1,67 @@
+rules_version = '2';
+
+// Access model:
+// - Only staff (a users/{uid} document) can use the panel. Staff accounts are created by the
+//   createStaffUser Cloud Function, never from the client.
+// - Admins see and schedule everything; doctors only their own patients and appointments.
+// - Clinical notes are read and written only by the patient's treating doctor, and never edited.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function profile() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function isStaff() {
+      return signedIn() && exists(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+
+    function isAdmin() {
+      return isStaff() && profile().role == 'admin';
+    }
+
+    function isDoctorOf(data) {
+      return isStaff() && profile().role == 'doctor' && data.doctorId == request.auth.uid;
+    }
+
+    // A doctor may edit their own records but not hand them to another doctor.
+    function keepsDoctor() {
+      return request.resource.data.doctorId == resource.data.doctorId;
+    }
+
+    match /users/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || isStaff());
+      allow write: if false;
+    }
+
+    match /patients/{patientId} {
+      allow read: if isAdmin() || isDoctorOf(resource.data);
+      allow create: if isAdmin() || isDoctorOf(request.resource.data);
+      allow update: if isAdmin() || (isDoctorOf(resource.data) && keepsDoctor());
+      allow delete: if isAdmin();
+
+      match /notes/{noteId} {
+        function treatingDoctor() {
+          return isDoctorOf(get(/databases/$(database)/documents/patients/$(patientId)).data);
+        }
+
+        allow read: if treatingDoctor();
+        allow create: if treatingDoctor()
+          && request.resource.data.authorId == request.auth.uid
+          && request.resource.data.text is string
+          && request.resource.data.text.size() > 0;
+        allow update, delete: if false;
+      }
+    }
+
+    match /appointments/{appointmentId} {
+      allow read: if isAdmin() || isDoctorOf(resource.data);
+      allow create: if isAdmin() || isDoctorOf(request.resource.data);
+      allow update: if isAdmin() || (isDoctorOf(resource.data) && keepsDoctor());
+      allow delete: if isAdmin();
+    }
+  }
+}
