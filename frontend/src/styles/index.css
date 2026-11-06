@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+/* Brand tokens (colors, type, sizes) shared with the landing. */
+@import "../../../shared/theme.css";
+
+@layer base {
+  body {
+    @apply bg-surface font-sans text-fg-2 antialiased;
+  }
+
+  /* Tailwind v4 no longer gives buttons a pointer cursor. */
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+
+  /* Native <dialog> (components/ui/Modal.tsx) */
+  dialog::backdrop {
+    background: color-mix(in srgb, var(--color-ink) 60%, transparent);
+  }
+
+  html:has(dialog[open]) {
+    overflow: hidden;
+  }
+}
