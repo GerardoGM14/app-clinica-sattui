@@ -9,11 +9,10 @@ export const site = {
   lang: 'es',
 };
 
-// TODO: confirm the real number; this is the one shown in the Figma design.
 export const contact = {
-  phone: '+51 689 548 648',
-  phoneHref: 'tel:+51689548648',
-  whatsappNumber: '51689548648',
+  phone: '+51 947 776 935',
+  phoneHref: 'tel:+51947776935',
+  whatsappNumber: '51947776935',
 };
 
 /** WhatsApp chat link, optionally with a prefilled message. */
